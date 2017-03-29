@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+		<Property name="LOG_HOME">/usr/local/logs/solr</Property>
+		<Property name="LOG_LAYOUT">%d %-5p %t (%c:%L) - %m%n</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${LOG_LAYOUT}" />
+		</Console>
+		<RollingFile name="FILE" fileName="${LOG_HOME}/info.log"
+			filePattern="${LOG_HOME}/info-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="${LOG_LAYOUT}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="EXCEPTION" fileName="${LOG_HOME}/exception.log"
+			filePattern="${LOG_HOME}/exception-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="${LOG_LAYOUT}" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="exception" level="error" additivity="false">
+			<AppenderRef ref="EXCEPTION" />
+		</Logger>
+		<Root level="info">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="FILE" />
+		</Root>
+	</Loggers>
+</Configuration> 
